@@ -1,0 +1,16 @@
+name: 'Deploy front'
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy_frontend:
+    runs-on:
+      - back-runner
+    steps:
+      - uses: actions/checkout@v3.3.0
+      - name: Deploy dev
+        run: docker-compose up -d --build
