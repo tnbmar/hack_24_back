@@ -11,7 +11,7 @@ jobs:
     runs-on:
       - back-runner
     steps:
-      - uses: actions/checkout@v3.3.0
+      - uses: actions/checkout@v4
       - name: Create .env file
         run: |
           echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> .env
