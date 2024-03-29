@@ -1,23 +1,16 @@
-name: "Push: main"
+name: 'Deploy front'
 
 on:
-  workflow_dispatch:
   push:
     branches:
-      - 'main'
+      - main
+  workflow_dispatch:
+
 jobs:
-  deploy_back:
+  deploy_frontend:
     runs-on:
-      - back-runner
+      - bit-runner
     steps:
-      - uses: actions/checkout@v3.3
-      - name: Create .env file
-        run: |
-          echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> .env
-          echo "DATABASE_PASS=${{ secrets.DATABASE_PASS }}" >> .env
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
-          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
-          echo "BACK_HOST=${{ secrets.BACK_HOST }}" >> .env
-          echo "PRIVATE_KEY=${{ secrets.PRIVATE_KEY }}" >> .env
+      - uses: actions/checkout@v3.3.0
       - name: Deploy dev
         run: docker-compose up -d --build
