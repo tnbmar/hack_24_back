@@ -1,0 +1,37 @@
+{
+  "name": "hack_24_back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node src/swagger/index.cjs && nodemon",
+    "swagger": "node src/swagger/index.cjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@adminjs/express": "^6.1.0",
+    "@adminjs/prisma": "^5.0.3",
+    "@adminjs/themes": "^1.0.1",
+    "@prisma/client": "^5.11.0",
+    "adminjs": "^7.8.1",
+    "body-parser": "^1.20.2",
+    "connect-pg-simple": "^9.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "dotenv-flow": "^4.1.0",
+    "express": "^4.19.2",
+    "express-formidable": "^1.2.0",
+    "express-session": "^1.18.0",
+    "glob": "^10.3.12",
+    "http": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.0",
+    "sha256": "^0.2.0",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.0",
+    "tslib": "^2.6.2"
+  }
+}
