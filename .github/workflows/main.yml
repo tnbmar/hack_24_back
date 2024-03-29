@@ -5,13 +5,12 @@ on:
   push:
     branches:
       - 'main'
-
 jobs:
   deploy_back:
     runs-on:
       - back-runner
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
       - name: Create .env file
         run: |
           echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> .env
