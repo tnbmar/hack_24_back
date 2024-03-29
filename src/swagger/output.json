@@ -68,6 +68,150 @@
         }
       }
     },
+    "/tournaments": {
+      "get": {
+        "tags": [
+          "Tournament"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tournament"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Test"
+                },
+                "icon": {
+                  "type": "string",
+                  "example": "https://img.ru"
+                }
+              },
+              "required": [
+                "name",
+                "icon"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/tournaments/participate": {
+      "post": {
+        "tags": [
+          "Tournament"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Some description...",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "tournamentId": {
+                  "type": "string",
+                  "example": "0"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/tournaments/{id}": {
+      "get": {
+        "tags": [
+          "Tournament"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tournament"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/registration": {
       "post": {
         "tags": [
@@ -78,14 +222,25 @@
           {
             "name": "body",
             "in": "body",
+            "description": "Some description...",
             "schema": {
               "type": "object",
               "properties": {
                 "username": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "test"
                 },
                 "password": {
-                  "example": "any"
+                  "type": "string",
+                  "example": "test"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "address": {
+                  "type": "string",
+                  "example": "test"
                 }
               }
             }

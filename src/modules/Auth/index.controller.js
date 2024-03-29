@@ -10,10 +10,11 @@ authController.post(
             in: 'body',
             description: 'Some description...',
             schema: {
-                $username: 'John Doe',
-                $password: 29,
-                $address: '0x6789'
-                $email:"test@admin.ru"
+                username:"test",
+                 password:"test", 
+                 email:"test", 
+                 address:"test"
+                
             }
     } */
   async (req, res) => {

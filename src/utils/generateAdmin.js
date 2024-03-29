@@ -29,6 +29,36 @@ export const generateAdminJS = () => {
         resource: { model: getModelByName("User"), client: prisma },
         options: {},
       },
+      {
+        resource: { model: getModelByName("Tournament"), client: prisma },
+        options: {
+          properties: {
+            tournaments: {
+              isVisible: {
+                list: true,
+                show: true,
+                filter: true,
+                sort: true,
+              },
+            },
+          },
+        },
+      },
+      {
+        resource: { model: getModelByName("Match"), client: prisma },
+        options: {
+          properties: {
+            tournaments: {
+              isVisible: {
+                list: true,
+                show: true,
+                filter: true,
+                sort: true,
+              },
+            },
+          },
+        },
+      },
     ],
     branding: {
       logo: "https://i.ibb.co/DznmrKw/Frame-7.png",

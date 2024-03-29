@@ -13,6 +13,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TournamentStatus {
+  FINISHED
+  NOW
+  FUTURE
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   username  String   @unique
@@ -20,6 +26,36 @@ model User {
   password  String
   email     String
   createdAt DateTime @default(now())
+  tournaments Tournament[] @relation("MyRelationTable")
+  firstMatches Match[]     @relation("FirstPlayer")
+  secondMatches Match[]    @relation("SecondPlayer")
+  winnedMatches Match[] @relation("MatchWinner")
+
 }
 
+model Tournament {
+  id        Int              @id @default(autoincrement())
+  name      String
+  icon      String
+  createdAt DateTime         @default(now())
+  status    TournamentStatus @default(FUTURE)
+  users User[] @relation("MyRelationTable")
+  matches Match[] @relation("MatchInTournament")
 
+}
+
+model Match {
+  id        Int              @id @default(autoincrement())
+  createdAt DateTime         @default(now())
+  first_player_id Int
+  second_player_id Int
+  winner_id Int
+  tournamentId Int
+  tournament Tournament? @relation("MatchInTournament", fields: [tournamentId], references: [id])
+  first_player    User?    @relation("FirstPlayer", fields: [first_player_id], references: [id])
+  second_player   User?    @relation("SecondPlayer", fields: [second_player_id], references: [id])
+  winner           User?    @relation("MatchWinner", fields: [winner_id], references: [id]) // Отношение с победителем
+  first_score Int? 
+  second_score Int?
+
+}
