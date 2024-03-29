@@ -9,7 +9,7 @@ on:
 jobs:
   deploy_frontend:
     runs-on:
-      - bit-runner
+      - back-runner
     steps:
       - uses: actions/checkout@v3.3.0
       - name: Deploy dev
