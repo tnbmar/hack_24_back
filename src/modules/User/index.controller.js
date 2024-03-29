@@ -18,6 +18,19 @@ userController.get("/user/me", async (req, res) => {
   }
 });
 
+userController.get("/stats/me", async (req, res) => {
+  // #swagger.tags = ['Users']
+  try {
+    const token = req.headers.authorization;
+    if (!token) throw Error("token field empty");
+    const stats = await userService.getStats(token);
+    res.status(200).json({ stats });
+  } catch (error) {
+    console.log(error);
+    const errorStatus = checkError(error);
+    res.status(errorStatus.status).json(errorStatus.message);
+  }
+});
 userController.get("/users", async (req, res) => {
   // #swagger.tags = ['Users']
   try {

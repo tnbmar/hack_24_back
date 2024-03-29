@@ -30,6 +30,10 @@ export const generateAdminJS = () => {
         options: {},
       },
       {
+        resource: { model: getModelByName("Reward"), client: prisma },
+        options: {},
+      },
+      {
         resource: { model: getModelByName("Tournament"), client: prisma },
         options: {
           properties: {

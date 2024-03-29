@@ -9,6 +9,37 @@ class UserService {
       const newUser = await prisma.user.create({
         data: { username, password: sha256(password), email, address },
       });
+      const regReward = await prisma.reward.findFirst({ where: { status: "AUTH" } });
+      if (regReward) {
+        await prisma.user.update({
+          where: { id: newUser.id },
+          data: {
+            rewards: {
+              connect: {
+                id: regReward.id,
+              },
+            },
+          },
+        });
+      } else {
+        const newReward = await prisma.reward.create({
+          data: {
+            status: "AUTH",
+            name: "Авторизация",
+            icon: "https://i.ibb.co/ys376Xd/867594176-app-icon-big-1441389202.jpg",
+          },
+        });
+        await prisma.user.update({
+          where: { id: newUser.id },
+          data: {
+            rewards: {
+              connect: {
+                id: newReward.id,
+              },
+            },
+          },
+        });
+      }
       return newUser;
     } catch (e) {
       console.error({ e });
@@ -19,6 +50,8 @@ class UserService {
     try {
       const user = await prisma.user.findFirst({
         where: { id },
+
+        include: { rewards: true },
       });
       if (!user) throw new Error("Пользователь не найден");
       return user;
@@ -42,6 +75,33 @@ class UserService {
     if (id) {
       const user = await this.getUserById(id);
       return user;
+    } else {
+      throw new Error("Not authorization");
+    }
+  }
+
+  async getStats(token) {
+    const id = encodeToken(token);
+    if (id) {
+      try {
+        const user = await prisma.user.findFirst({
+          where: { id },
+          include: {
+            firstMatches: true,
+            secondMatches: true,
+            winnedMatches: true,
+          },
+        });
+        const alMatches = user.firstMatches.length + user.secondMatches.length;
+        if (!user) throw new Error("Пользователь не найден");
+        return {
+          match_count: alMatches,
+          win_count: user.winnedMatches.length,
+          rating_percent: Math.ceil((user.winnedMatches.length * 100) / alMatches),
+        };
+      } catch (e) {
+        throw new Error(e);
+      }
     } else {
       throw new Error("Not authorization");
     }

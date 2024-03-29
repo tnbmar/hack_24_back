@@ -19,6 +19,13 @@ enum TournamentStatus {
   FUTURE
 }
 
+
+enum RewardType {
+  AUTH
+  MATCH
+  MORE_MATCH
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   username  String   @unique
@@ -30,6 +37,11 @@ model User {
   firstMatches Match[]     @relation("FirstPlayer")
   secondMatches Match[]    @relation("SecondPlayer")
   winnedMatches Match[] @relation("MatchWinner")
+  winnedTournaments Tournament[] @relation("MatchWinner")
+  rewards Reward[]
+
+
+  
 
 }
 
@@ -41,6 +53,10 @@ model Tournament {
   status    TournamentStatus @default(FUTURE)
   users User[] @relation("MyRelationTable")
   matches Match[] @relation("MatchInTournament")
+  winner_id Int?
+  winner           User?    @relation("MatchWinner", fields: [winner_id], references: [id]) // Отношение с победителем
+
+
 
 }
 
@@ -49,13 +65,28 @@ model Match {
   createdAt DateTime         @default(now())
   first_player_id Int
   second_player_id Int
-  winner_id Int
+  winner_id Int?
   tournamentId Int
   tournament Tournament? @relation("MatchInTournament", fields: [tournamentId], references: [id])
-  first_player    User?    @relation("FirstPlayer", fields: [first_player_id], references: [id])
-  second_player   User?    @relation("SecondPlayer", fields: [second_player_id], references: [id])
+  first_player    User    @relation("FirstPlayer", fields: [first_player_id], references: [id])
+  second_player   User    @relation("SecondPlayer", fields: [second_player_id], references: [id])
   winner           User?    @relation("MatchWinner", fields: [winner_id], references: [id]) // Отношение с победителем
   first_score Int? 
   second_score Int?
+  index Int?
+}
+
+model Reward {
+   id        Int              @id @default(autoincrement())
+   name      String
+   icon      String
+   users User[]
+   status RewardType
 
 }
+
+
+
+
+
+
